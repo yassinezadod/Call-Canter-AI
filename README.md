@@ -37,7 +37,7 @@ L'application repose sur un écosystème moderne, asynchrone et hautement perfor
 
 Le diagramme ci-dessous illustre l'interaction entre le serveur FastAPI, la base de données locale MongoDB, le stockage cloud Supabase et les services d'inférence IA :
 
-![Software Architecture](docs/Software%20Architecture.png)
+![Software Architecture](docs/Software_Architecture.png)
 
 ### Pipeline de Données
 
