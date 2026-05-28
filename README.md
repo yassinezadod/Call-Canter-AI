@@ -67,5 +67,12 @@ git clone [https://github.com/yassinezadod/Call-Canter-AI.git](https://github.co
 cd call-center-ai
 poetry install
 
-
 ```
+
+---
+
+## 📺 Démo Vidéo du Projet
+
+Découvrez le fonctionnement de l'application en action (Upload, Transcription Whisper, et Analyse NLP avec Llama 3.1) :
+
+👉 [**Regarder la vidéo de démonstration sur Google Drive**](https://drive.google.com/file/d/1uEb_lF3vNQ8557vYxH5wqW5LZKLhBmNd/view)
