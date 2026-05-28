@@ -10,7 +10,7 @@ Ce projet automatise le traitement des flux audio bruts (enregistrements clients
 
 Voici comment l'application gère un appel de bout en bout, de la réception du fichier audio jusqu'à sa transcription et son analyse IA complète :
 
-![Workflow Diagram](docs/workflow%20diagramme.png)
+![Workflow Diagram](docs/workflow-diagramme.png)
 
 ---
 
@@ -37,7 +37,7 @@ L'application repose sur un écosystème moderne, asynchrone et hautement perfor
 
 Le diagramme ci-dessous illustre l'interaction entre le serveur FastAPI, la base de données locale MongoDB, le stockage cloud Supabase et les services d'inférence IA :
 
-![Software Architecture](docs/Software_Architecture.png)
+![Software Architecture](docs/software-architecture.png)
 
 ### Pipeline de Données
 
@@ -48,7 +48,7 @@ Le diagramme ci-dessous illustre l'interaction entre le serveur FastAPI, la base
 
 Le diagramme de séquence suivant détaille la chronologie des requêtes asynchrones :
 
-![Sequence Diagram](docs/call%20center%20IA%20sequence%20diagramme%20.png)
+![Sequence Diagram](docs/call-center-sequence.png)
 
 ---
 
