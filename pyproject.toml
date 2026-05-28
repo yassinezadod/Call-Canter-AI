@@ -16,7 +16,8 @@ dependencies = [
     "faster-whisper (>=1.2.1,<2.0.0)",
     "groq (>=1.2.0,<2.0.0)",
     "python-dotenv (>=1.2.2,<2.0.0)",
-    "vercel-blob (>=0.4.2,<0.5.0)"
+    "vercel-blob (>=0.4.2,<0.5.0)",
+    "supabase (>=2.30.0,<3.0.0)"
 ]
 
 [tool.poetry]
