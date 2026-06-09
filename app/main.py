@@ -3,6 +3,7 @@ import shutil
 from datetime import datetime
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from motor.motor_asyncio import AsyncIOMotorClient
+from fastapi.middleware.cors import CORSMiddleware
 from app.services.nlp_analyzer import analyze_call_content
 from dotenv import load_dotenv
 
@@ -10,11 +11,27 @@ from dotenv import load_dotenv
 # Import de tes services
 from app.services.whisper_stt import transcribe_audio
 from app.services.storage import upload_audio
+from bson import ObjectId
 
 # 1. Chargement des variables d'environnement
 load_dotenv()
 
 app = FastAPI(title="AI Call Center Analytics")
+
+# 2. NOUVEAU : CONFIGURATION DU MIDDLEWARE CORS
+# Pour autoriser ton Next.js (port 3000) à appeler ton FastAPI (port 8000)
+# ------------------------------------------------------------------
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000"
+    ],  # Les URLs de ton application Next.js
+    allow_credentials=True,
+    allow_methods=["*"],  # Autorise toutes les requêtes (GET, POST, OPTIONS...)
+    allow_headers=["*"],  # Autorise tous les headers HTTP
+)
+# ------------------------------------------------------------------
 
 # 2. Configuration MongoDB avec Fallback
 MONGO_URI = os.getenv("MONGO_URI")
@@ -94,7 +111,7 @@ async def upload_and_transcribe(file: UploadFile = File(...)):
             "call_id": call_id, # Clé étrangère vers la collection 'calls'
             "sentiment": analysis_result.get("sentiment"),
             "problemes": analysis_result.get("problemes"),
-            "solutions": analysis_result.get("solutions_proposees"),
+            "solutions": analysis_result.get("solutions"),
             "resume": analysis_result.get("resume"),
             "analyzed_at": datetime.utcnow()
         }
@@ -155,3 +172,29 @@ async def get_analysis_by_call(call_id: str):
         analysis["_id"] = str(analysis["_id"])
         return analysis
     raise HTTPException(status_code=404, detail="Analyse non trouvée")
+
+@app.get("/calls/{call_id}")
+async def get_single_call(call_id: str):
+    """
+    Récupère un appel spécifique (métadonnées + transcription) via son _id MongoDB
+    """
+    try:
+        # Vérification si le format de l'ID est un ObjectId MongoDB valide
+        if not ObjectId.is_valid(call_id):
+            raise HTTPException(status_code=400, detail="Format de call_id invalide.")
+
+        # Recherche du document dans la collection 'calls'
+        call = await calls_collection.find_one({"_id": ObjectId(call_id)})
+        
+        if not call:
+            raise HTTPException(status_code=404, detail="Document audio introuvable.")
+
+        # Conversion de l'ObjectId en chaîne de caractères pour le JSON Next.js
+        call["_id"] = str(call["_id"])
+        return call
+
+    except HTTPException as http_err:
+        raise http_err
+    except Exception as e:
+        print(f"❌ Erreur lors de la récupération du call : {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur interne du serveur : {str(e)}")
