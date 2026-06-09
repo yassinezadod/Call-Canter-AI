@@ -18,15 +18,19 @@ load_dotenv()
 
 app = FastAPI(title="AI Call Center Analytics")
 
+frontend_origins_raw = os.getenv("FRONTEND_URL")
+
+if not frontend_origins_raw:
+    raise RuntimeError("❌ ERREUR : La variable FRONTEND_URL est manquante dans le fichier .env")
+
+ALLOWED_ORIGINS = [origin.strip() for origin in frontend_origins_raw.split(",")]
+
 # 2. NOUVEAU : CONFIGURATION DU MIDDLEWARE CORS
 # Pour autoriser ton Next.js (port 3000) à appeler ton FastAPI (port 8000)
 # ------------------------------------------------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000"
-    ],  # Les URLs de ton application Next.js
+    allow_origins=ALLOWED_ORIGINS,  # Les URLs de ton application Next.js
     allow_credentials=True,
     allow_methods=["*"],  # Autorise toutes les requêtes (GET, POST, OPTIONS...)
     allow_headers=["*"],  # Autorise tous les headers HTTP
