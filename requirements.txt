@@ -1,0 +1,9 @@
+fastapi>=0.110.0
+uvicorn>=0.28.0
+pydantic>=2.6.0
+python-multipart>=0.0.9
+motor>=3.3.2
+python-dotenv>=1.0.1
+groq>=0.4.2
+supabase>=2.3.0
+bson>=0.5.10
