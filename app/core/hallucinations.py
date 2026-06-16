@@ -1,39 +1,73 @@
 # app/core/hallucinations.py
 
-# Dictionnaire de correction des erreurs de transcription et phonétiques de Whisper
+# Dictionnaire global de correction des erreurs de transcription et phonétiques de Whisper
 WHISPER_CORRECTIONS = {
     # ==========================================================================
     # 1. CORRECTIONS PHONÉTIQUES & BUGS D'ÉCOUTE (DARIJA / ARABE)
     # ==========================================================================
-    # --- Cas Test 1 : Problème de connexion internet ---
-    "غطف الصباح": "غدا ف الصباح",
-    "غطف": "غدا ف",
-    "مخدمش ليجاع": "ما خداماش ليا كاع",
-    "عفك": "عفاك",
-    "عن التكنيسيان": "عندك التكنيسيان",
     
-    # --- Cas Test 2 : Double Facturation / Remboursement ---
-    "البروموسيون دابا": "الرمبورسومون دابا",
-    "لنصيط لك": "لونصيت ليك",
-    "الغالط": "الغلط",
-    "ربعة وعشرين": "24",
+    # --- Cas Récurrents : Salutations et Intros Services ---
+    "مصلحة الزوبانة": "مصلحة الزبناء",
+    "يمكنلين ساعتك": "يمكن لي نساعدك",
+    "كيفاش أراي": "كيفاش راي",
+    "العفوة سيدي": "العفو أ سيدي",
+    "نهاركم بروك": "نهارك مبروك",
+    "هاني هاتشي": "هاني هادشي",
+    "غيب عشان": "غي باش",
+    "نضمنو": "نضمنوا",
+    "وعليكم السلامة": "وعليكم السلام",
     
-    # --- Cas Test 3 : Mauvais Agent / Modem en panne ---
-    "بالريش": "بالحمر",          # Whisper entend "Voyant Ryche" au lieu de "Voyant rouge/Hmar"
+    # --- Cas Récurrents : Problèmes de Connexion / Wi-Fi / Matériel ---
+    "يا قويا": "خويا",
+    "مشكلة الويفي رات قد": "المشكل ديال الويفي راه تقاد",
+    "غاف الست": "ف السيت",
+    "فالست": "ف السيت",
+    "بالريش": "بالحمر",           # Whisper entend "Voyant Ryche" au lieu de "Voyant rouge/Hmar"
     "وابغتش": "وما بغاتش",
+    "ابغتش": "ما بغاتش",
+    "هات الصباح": "هاد الصباح",
+    "بزربوب": "مزروب",
+    "بمزروب": "مزروب",
+    "ودوس تشغل": "ودوزت الشغل",
+    "مخدمش ليجاع": "ما خداماش ليا كاع",
     "قاعها ديومين": "كاع هادي يومين",
-    "اول شنو": "إيوا أشنو",
     "شركت مزيان": "راكب مزيان",
-    "هاتش شي": "هادشي",
     "تقدرت تدوز": "تقدر تدوز",
     "طيح": "طايح",
     "ماخدت نديرلك": "ما عندي ما ندير ليك",
     "بعدو عاوض": "بعد وعاود",
+    "عفك": "عفاك",
+    "عن التكنيسيان": "عندك التكنيسيان",
+    "غطب الصباح": "غدا ف الصباح",
+    "غطف الصباح": "غدا f الصباح",
+    "غطف": "غدا ف",
+    
+    # --- Cas Récurrents : Facturation / Banque / Virement ---
+    "البروموسيون دابا": "الرمبورسومون دابا",
+    "لنصيط لك": "لونصيت ليك",
+    "لونصيت ليك الرمبورسومون": "لونصيت ليك الرمبورسومون",
+    "الغالط": "الغلط",
+    "ربعة وعشرين": "24",
+    "لفيرمان": "الفيرمان",
+    "دوز الشغل": "ندوز الشغل",
+    "خير دي اللي ها ميزة جور": "غي دير ليها تحديث (Mise à jour)",
+    "ميزة جور": "تحديث (Mise à jour)",
+    "ورام كان غي": "راه كان غي",
+    "وراك نغيط": "راه كان غي",
+    "قطعوا لي الفلوس جوج مرات": "قطعوا ليا الفلوس جوج مرات",
+    "سرع الله": "سير الله",
+    "سرع الله يرحم الوالدين": "سير الله يرحم الوالدين",
+    # --- Nouvelles corrections détectées dans l'Audit 1781395341713 ---
+    "احنا ده بممثالينش": "حنا دابا مسالينش",
+    "ده بممثالينش": "دابا مسالينش",
+    "دلمن باعدو نعيدو عليكم": "تال من بعد ونعاودو نتصلو بكم",
+    "دلمن باعدو": "تال من بعد",
 
     # ==========================================================================
-    # 2. SUPPRESSION DES VRAIES HALLUCINATIONS (Remplacées par du vide)
+    # 2. SUPPRESSION DES VRAIES HALLUCINATIONS WHISPER (Remplacées par du vide)
     # ==========================================================================
-    # --- Hallucinations Réseaux Sociaux Arabe ---
+    
+    # --- Hallucinations Réseaux Sociaux Arabe (YouTube, TikTok, Facebook) ---
     "اشتركوا في القناة": "",
     "اشتركوا ف القناة": "",
     "اشترك في القناة": "",
@@ -43,6 +77,14 @@ WHISPER_CORRECTIONS = {
     "لايك وفولو": "",
     "شكرا على المشاهدة": "",
     "شكرا للمشاهدة": "",
+    "لا تنسى الاشتراك": "",
+    "لا تنسوا الاشتراك": "",
+    "رابط التحميل في الوصف": "",
+    "صلوا على النبي": "",
+    "عليه أفضل الصلاة والسلام": "",
+    "والسلام عليكم ورحمة الله": "",
+    "اشتركوا بالقناة": "",
+    "تابعونا على وسائل التواصل": "",
     
     # --- Hallucinations Réseaux Sociaux Français / Anglais ---
     "Abonnez-vous à la chaîne": "",
@@ -52,10 +94,17 @@ WHISPER_CORRECTIONS = {
     "Thank you for watching": "",
     "Subscribe to the channel": "",
     "Subscribe": "",
+    "Don't forget to subscribe": "",
+    "Like and comment": "",
+    "Hit the notification bell": "",
     
-    # --- Résidus et sous-titres fantômes Whisper ---
+    # --- Résidus de silence et sous-titres fantômes Whisper ---
     "Sous-titres réalisés par": "",
     "Sous-titrage": "",
     "Transcrit par": "",
-    "Subtitles by": ""
+    "Subtitles by": "",
+    "字幕": "",
+    "Merci.": "", # Souvent généré en boucle pendant les blancs/silences longs
+    "Thank you.": "",
+    "Chokran.": ""
 }

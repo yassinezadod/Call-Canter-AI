@@ -6,7 +6,7 @@ authors = [
     {name = "yassine zadod",email = "yassine.zadod@e-polytechnique.ma"}
 ]
 readme = "README.md"
-requires-python = ">=3.11,<3.13"
+requires-python = ">=3.13,<4.0"
 dependencies = [
     "fastapi[standard] (>=0.136.1,<0.137.0)",
     "uvicorn (>=0.46.0,<0.47.0)",
